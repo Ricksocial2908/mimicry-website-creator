@@ -69,6 +69,20 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
 
   const saveChanges = async () => {
     try {
+      // Get the current user session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError) throw sessionError;
+      
+      if (!session?.user?.id) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to save changes.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       // First, check if there's any existing content
       const { data: existingData } = await supabase
         .from('site_content')
@@ -86,7 +100,8 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
           .update({
             content,
             video_id: videoId,
-            updated_at: new Date().toISOString()
+            updated_at: new Date().toISOString(),
+            user_id: session.user.id
           })
           .eq('id', existingData.id);
       } else {
@@ -96,11 +111,13 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
           .insert({
             content,
             video_id: videoId,
+            user_id: session.user.id,
             updated_at: new Date().toISOString()
           });
       }
 
       if (result.error) {
+        console.error('Error saving content:', result.error);
         throw result.error;
       }
 
