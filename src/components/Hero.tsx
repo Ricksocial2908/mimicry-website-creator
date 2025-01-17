@@ -4,6 +4,7 @@ import { Input } from "./ui/input";
 import { useEditable } from "@/contexts/EditableContext";
 import EditableText from "./EditableText";
 import { useState } from "react";
+import Stickers from "./Stickers";
 
 const Hero = () => {
   const { videoId, setVideoId, isEditMode } = useEditable();
@@ -54,6 +55,9 @@ const Hero = () => {
           </div>
         </div>
       )}
+
+      {/* Stickers Layer */}
+      <Stickers />
 
       {/* Content */}
       <div className="relative h-screen flex items-center">
