@@ -9,6 +9,7 @@ import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import { useEditable } from "@/contexts/EditableContext";
+import EditableText from "@/components/EditableText";
 
 const Index = () => {
   const { isEditMode, toggleEditMode, saveChanges } = useEditable();
@@ -23,7 +24,11 @@ const Index = () => {
             transition={{ duration: 0.5 }}
             className="text-2xl font-bold"
           >
-            Digital Jungle
+            <EditableText
+              id="logo-text"
+              defaultContent="Digital Jungle"
+              className="inline-block"
+            />
           </motion.div>
           <div className="hidden md:flex space-x-8">
             <a href="#about" className="text-sm hover:text-primary transition-colors">ABOUT</a>
