@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import EditableText from "./EditableText";
+import EditableImage from "./EditableImage";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -25,14 +27,32 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="chip mb-6">JOIN</div>
+            <EditableText
+              id="contact-chip"
+              defaultContent="JOIN"
+              className="chip mb-6"
+            />
             <h2 className="heading-lg mb-6">
-              Master video editing and{" "}
-              <span className="text-primary">launch your creative career</span>
+              <EditableText
+                id="contact-title-1"
+                defaultContent="Master video editing and "
+                className="inline"
+              />
+              <span className="text-primary">
+                <EditableText
+                  id="contact-title-2"
+                  defaultContent="launch your creative career"
+                  className="inline"
+                />
+              </span>
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm mb-2">Name</label>
+                <EditableText
+                  id="contact-name-label"
+                  defaultContent="Name"
+                  className="block text-sm mb-2"
+                />
                 <input
                   type="text"
                   className="w-full p-3 bg-background rounded-lg border border-white/10"
@@ -41,7 +61,11 @@ const Contact = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2">Email</label>
+                <EditableText
+                  id="contact-email-label"
+                  defaultContent="Email"
+                  className="block text-sm mb-2"
+                />
                 <input
                   type="email"
                   className="w-full p-3 bg-background rounded-lg border border-white/10"
@@ -50,7 +74,11 @@ const Contact = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2">Phone Number</label>
+                <EditableText
+                  id="contact-phone-label"
+                  defaultContent="Phone Number"
+                  className="block text-sm mb-2"
+                />
                 <input
                   type="tel"
                   className="w-full p-3 bg-background rounded-lg border border-white/10"
@@ -59,7 +87,11 @@ const Contact = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2">Plan</label>
+                <EditableText
+                  id="contact-plan-label"
+                  defaultContent="Plan"
+                  className="block text-sm mb-2"
+                />
                 <select
                   className="w-full p-3 bg-background rounded-lg border border-white/10"
                   value={formData.plan}
@@ -76,7 +108,11 @@ const Contact = () => {
                 type="submit"
                 className="w-full py-4 bg-primary text-white rounded-lg font-medium"
               >
-                SUBMIT
+                <EditableText
+                  id="contact-submit-button"
+                  defaultContent="SUBMIT"
+                  className="inline"
+                />
               </motion.button>
             </form>
           </motion.div>
@@ -89,15 +125,22 @@ const Contact = () => {
             className="relative"
           >
             <div className="glass-card p-8 rounded-lg h-full">
-              <div className="chip mb-4">STUDENT</div>
-              <img
+              <EditableText
+                id="contact-testimonial-chip"
+                defaultContent="STUDENT"
+                className="chip mb-4"
+              />
+              <EditableImage
+                id="contact-testimonial-image"
                 src="/lovable-uploads/bde4078d-fa2e-48f3-b7a6-2e64a2355196.png"
                 alt="Student testimonial"
                 className="w-full rounded-lg mb-6"
               />
-              <p className="text-xl font-medium mb-4">
-                "This course transformed my editing skills, enabling me to craft stories that truly captivate and engage audiences."
-              </p>
+              <EditableText
+                id="contact-testimonial-quote"
+                defaultContent="This course transformed my editing skills, enabling me to craft stories that truly captivate and engage audiences."
+                className="text-xl font-medium mb-4"
+              />
             </div>
           </motion.div>
         </div>

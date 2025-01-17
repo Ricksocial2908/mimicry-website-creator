@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import EditableText from "./EditableText";
 
 const plans = [
   {
@@ -44,11 +45,24 @@ const Pricing = () => {
           className="text-center mb-16"
         >
           <h2 className="heading-lg mb-6">
-            Choose Your <span className="text-primary">Perfect Plan</span>
+            <EditableText
+              id="pricing-title-1"
+              defaultContent="Choose Your "
+              className="inline"
+            />
+            <span className="text-primary">
+              <EditableText
+                id="pricing-title-2"
+                defaultContent="Perfect Plan"
+                className="inline"
+              />
+            </span>
           </h2>
-          <p className="body-lg max-w-2xl mx-auto">
-            Unlock all premium features with the plan that fits your goals and elevate your editing skills.
-          </p>
+          <EditableText
+            id="pricing-description"
+            defaultContent="Unlock all premium features with the plan that fits your goals and elevate your editing skills."
+            className="body-lg max-w-2xl mx-auto"
+          />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -63,18 +77,38 @@ const Pricing = () => {
                 plan.name === "ELITE" ? "bg-primary/10" : ""
               }`}
             >
-              <div className="chip mb-6">{plan.name}</div>
+              <EditableText
+                id={`pricing-plan-${index}-name`}
+                defaultContent={plan.name}
+                className="chip mb-6"
+              />
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-4xl font-bold">{plan.price}</span>
-                <span className="text-muted-foreground">/ month</span>
+                <EditableText
+                  id={`pricing-plan-${index}-price`}
+                  defaultContent={plan.price}
+                  className="text-4xl font-bold"
+                />
+                <EditableText
+                  id={`pricing-plan-${index}-period`}
+                  defaultContent="/ month"
+                  className="text-muted-foreground"
+                />
               </div>
-              <p className="body-base mb-8">{plan.description}</p>
+              <EditableText
+                id={`pricing-plan-${index}-description`}
+                defaultContent={plan.description}
+                className="body-base mb-8"
+              />
               
               <ul className="space-y-4 mb-8">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3">
+                {plan.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-primary" />
-                    <span>{feature}</span>
+                    <EditableText
+                      id={`pricing-plan-${index}-feature-${featureIndex}`}
+                      defaultContent={feature}
+                      className="inline"
+                    />
                   </li>
                 ))}
               </ul>
@@ -88,7 +122,11 @@ const Pricing = () => {
                     : "bg-white text-black"
                 }`}
               >
-                GET STARTED TODAY
+                <EditableText
+                  id={`pricing-plan-${index}-button`}
+                  defaultContent="GET STARTED TODAY"
+                  className="inline"
+                />
               </motion.button>
             </motion.div>
           ))}

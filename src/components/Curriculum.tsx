@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import EditableText from "./EditableText";
+import EditableImage from "./EditableImage";
 
 const chapters = [
   {
@@ -31,9 +33,30 @@ const Curriculum = () => {
           className="text-center mb-16"
         >
           <h2 className="heading-lg mb-6">
-            Complete video editing curriculum to{" "}
-            <span className="text-primary">build skills</span> and{" "}
-            <span className="text-primary">launch your career</span>
+            <EditableText
+              id="curriculum-title-1"
+              defaultContent="Complete video editing curriculum to "
+              className="inline"
+            />
+            <span className="text-primary">
+              <EditableText
+                id="curriculum-title-2"
+                defaultContent="build skills"
+                className="inline"
+              />
+            </span>
+            <EditableText
+              id="curriculum-title-3"
+              defaultContent=" and "
+              className="inline"
+            />
+            <span className="text-primary">
+              <EditableText
+                id="curriculum-title-4"
+                defaultContent="launch your career"
+                className="inline"
+              />
+            </span>
           </h2>
         </motion.div>
         
@@ -50,15 +73,38 @@ const Curriculum = () => {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="flex gap-4 mb-4">
-                    <span className="chip">{chapter.number}</span>
-                    <span className="chip">{chapter.videos}</span>
-                    <span className="chip">{chapter.duration}</span>
+                    <EditableText
+                      id={`curriculum-chapter-${index}-number`}
+                      defaultContent={chapter.number}
+                      className="chip"
+                    />
+                    <EditableText
+                      id={`curriculum-chapter-${index}-videos`}
+                      defaultContent={chapter.videos}
+                      className="chip"
+                    />
+                    <EditableText
+                      id={`curriculum-chapter-${index}-duration`}
+                      defaultContent={chapter.duration}
+                      className="chip"
+                    />
                   </div>
-                  <h3 className="heading-md mb-4">{chapter.title}</h3>
-                  <p className="body-base">{chapter.description}</p>
+                  <h3 className="heading-md mb-4">
+                    <EditableText
+                      id={`curriculum-chapter-${index}-title`}
+                      defaultContent={chapter.title}
+                      className="inline"
+                    />
+                  </h3>
+                  <EditableText
+                    id={`curriculum-chapter-${index}-description`}
+                    defaultContent={chapter.description}
+                    className="body-base"
+                  />
                 </div>
                 <div>
-                  <img
+                  <EditableImage
+                    id={`curriculum-chapter-${index}-image`}
                     src={chapter.image}
                     alt={chapter.title}
                     className="rounded-lg w-full object-cover aspect-video"

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import EditableText from "./EditableText";
+import EditableImage from "./EditableImage";
 
 const testimonials = [
   {
@@ -44,13 +46,35 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="chip mb-6">TESTIMONIAL</div>
+          <EditableText
+            id="testimonials-chip"
+            defaultContent="TESTIMONIAL"
+            className="chip mb-6"
+          />
           <h2 className="heading-lg mb-6">
-            What our <span className="text-primary">students say</span> about the course
+            <EditableText
+              id="testimonials-title-1"
+              defaultContent="What our "
+              className="inline"
+            />
+            <span className="text-primary">
+              <EditableText
+                id="testimonials-title-2"
+                defaultContent="students say"
+                className="inline"
+              />
+            </span>
+            <EditableText
+              id="testimonials-title-3"
+              defaultContent=" about the course"
+              className="inline"
+            />
           </h2>
-          <p className="body-lg max-w-2xl mx-auto">
-            Discover how our course has helped students elevate their video editing skills and open new career opportunities.
-          </p>
+          <EditableText
+            id="testimonials-description"
+            defaultContent="Discover how our course has helped students elevate their video editing skills and open new career opportunities."
+            className="body-lg max-w-2xl mx-auto"
+          />
         </motion.div>
 
         <div className="relative">
@@ -67,15 +91,28 @@ const Testimonials = () => {
                 >
                   <div className="glass-card p-8 rounded-lg max-w-3xl mx-auto">
                     <div className="flex items-start gap-6">
-                      <img
+                      <EditableImage
+                        id={`testimonial-${index}-image`}
                         src={testimonial.image}
                         alt={testimonial.name}
                         className="w-20 h-20 rounded-full object-cover"
                       />
                       <div>
-                        <p className="text-lg mb-4">{testimonial.text}</p>
-                        <p className="font-medium">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                        <EditableText
+                          id={`testimonial-${index}-text`}
+                          defaultContent={testimonial.text}
+                          className="text-lg mb-4"
+                        />
+                        <EditableText
+                          id={`testimonial-${index}-name`}
+                          defaultContent={testimonial.name}
+                          className="font-medium"
+                        />
+                        <EditableText
+                          id={`testimonial-${index}-company`}
+                          defaultContent={testimonial.company}
+                          className="text-sm text-muted-foreground"
+                        />
                       </div>
                     </div>
                   </div>
