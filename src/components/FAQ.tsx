@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import { useState } from "react";
+import EditableText from "./EditableText";
 
 const faqs = [
   {
@@ -31,7 +32,18 @@ const FAQ = () => {
           className="text-center mb-16"
         >
           <h2 className="heading-lg mb-6">
-            Frequently asked <span className="text-primary">questions</span>
+            <EditableText
+              id="faq-title-1"
+              defaultContent="Frequently asked "
+              className="inline"
+            />
+            <span className="text-primary">
+              <EditableText
+                id="faq-title-2"
+                defaultContent="questions"
+                className="inline"
+              />
+            </span>
           </h2>
         </motion.div>
 
@@ -49,7 +61,11 @@ const FAQ = () => {
                 className="w-full p-6 flex items-center justify-between"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
-                <span className="text-lg font-medium text-left">{faq.question}</span>
+                <EditableText
+                  id={`faq-question-${index}`}
+                  defaultContent={faq.question}
+                  className="text-lg font-medium text-left"
+                />
                 {openIndex === index ? (
                   <Minus className="w-5 h-5 text-primary" />
                 ) : (
@@ -59,7 +75,11 @@ const FAQ = () => {
               
               {openIndex === index && (
                 <div className="px-6 pb-6">
-                  <p className="body-base">{faq.answer}</p>
+                  <EditableText
+                    id={`faq-answer-${index}`}
+                    defaultContent={faq.answer}
+                    className="body-base"
+                  />
                 </div>
               )}
             </motion.div>

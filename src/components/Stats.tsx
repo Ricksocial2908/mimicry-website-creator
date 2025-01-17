@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import EditableText from "./EditableText";
 
 const stats = [
   {
@@ -31,7 +32,23 @@ const Stats = () => {
           className="text-center mb-16"
         >
           <h2 className="heading-lg mb-6">
-            Why choose our <span className="text-primary">video editing course</span>?
+            <EditableText
+              id="stats-title-1"
+              defaultContent="Why choose our "
+              className="inline"
+            />
+            <span className="text-primary">
+              <EditableText
+                id="stats-title-2"
+                defaultContent="video editing course"
+                className="inline"
+              />
+            </span>
+            <EditableText
+              id="stats-title-3"
+              defaultContent="?"
+              className="inline"
+            />
           </h2>
         </motion.div>
 
@@ -45,8 +62,16 @@ const Stats = () => {
               viewport={{ once: true }}
               className="glass-card p-6 rounded-lg text-center"
             >
-              <h3 className="text-4xl font-bold text-primary mb-4">{stat.number}</h3>
-              <p className="body-base">{stat.description}</p>
+              <EditableText
+                id={`stats-number-${index}`}
+                defaultContent={stat.number}
+                className="text-4xl font-bold text-primary mb-4"
+              />
+              <EditableText
+                id={`stats-description-${index}`}
+                defaultContent={stat.description}
+                className="body-base"
+              />
             </motion.div>
           ))}
         </div>

@@ -22,6 +22,11 @@ const EditableText = ({ id, defaultContent, className = '', as: Component = 'div
     updateContent(id, editableContent);
   };
 
+  const handleInput = (e: React.FormEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    setEditableContent(target.textContent || '');
+  };
+
   if (isEditMode) {
     return (
       <div className="relative group">
@@ -29,9 +34,8 @@ const EditableText = ({ id, defaultContent, className = '', as: Component = 'div
           className={`${className} outline-none border border-transparent focus:border-primary rounded px-2`}
           contentEditable
           onBlur={handleBlur}
-          onInput={(e: React.FormEvent<HTMLDivElement>) => 
-            setEditableContent(e.currentTarget.textContent || '')
-          }
+          onInput={handleInput}
+          suppressContentEditableWarning
           dangerouslySetInnerHTML={{ __html: editableContent }}
         />
         <div className="absolute -top-2 -right-2 bg-primary text-xs px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">

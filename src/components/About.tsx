@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import EditableText from "./EditableText";
 
 const About = () => {
   return (
@@ -11,20 +12,46 @@ const About = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="chip mb-6">ABOUT US</div>
+            <EditableText
+              id="about-chip"
+              defaultContent="ABOUT US"
+              className="chip mb-6"
+            />
             <h2 className="heading-lg mb-6">
-              Discover <span className="text-primary">the art of video editing</span> with us
+              <EditableText
+                id="about-title-1"
+                defaultContent="Discover "
+                className="inline"
+              />
+              <span className="text-primary">
+                <EditableText
+                  id="about-title-2"
+                  defaultContent="the art of video editing"
+                  className="inline"
+                />
+              </span>
+              <EditableText
+                id="about-title-3"
+                defaultContent=" with us"
+                className="inline"
+              />
             </h2>
-            <p className="body-base mb-6">
-              At Edclip, we offer comprehensive video editing courses designed for all major software – from Adobe
-              Premiere to Final Cut Pro. Master the skills to create stunning visuals, regardless of the tools you use.
-            </p>
+            <EditableText
+              id="about-description"
+              defaultContent="At Edclip, we offer comprehensive video editing courses designed for all major software – from Adobe Premiere to Final Cut Pro. Master the skills to create stunning visuals, regardless of the tools you use."
+              className="body-base mb-6"
+            />
             <div className="glass-card p-6 rounded-lg">
-              <p className="text-lg font-medium mb-2">
-                "Editing isn't just technical, it's creative. Our courses empower you to tell impactful stories
-                through any editing platform."
-              </p>
-              <p className="text-sm text-muted-foreground">- Founder</p>
+              <EditableText
+                id="about-quote"
+                defaultContent="Editing isn't just technical, it's creative. Our courses empower you to tell impactful stories through any editing platform."
+                className="text-lg font-medium mb-2"
+              />
+              <EditableText
+                id="about-quote-author"
+                defaultContent="- Founder"
+                className="text-sm text-muted-foreground"
+              />
             </div>
           </motion.div>
           <motion.div
