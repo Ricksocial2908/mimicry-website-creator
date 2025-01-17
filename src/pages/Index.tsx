@@ -23,7 +23,7 @@ const Index = () => {
             transition={{ duration: 0.5 }}
             className="text-2xl font-bold"
           >
-            Ed.
+            Digital Jungle
           </motion.div>
           <div className="hidden md:flex space-x-8">
             <a href="#about" className="text-sm hover:text-primary transition-colors">ABOUT</a>
