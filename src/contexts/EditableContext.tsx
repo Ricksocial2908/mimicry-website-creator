@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { useToast } from "@/components/ui/use-toast";
 
 interface EditableContextType {
   isEditMode: boolean;
@@ -6,6 +7,7 @@ interface EditableContextType {
   updateContent: (id: string, content: string) => void;
   content: Record<string, string>;
   getContent: (id: string) => string;
+  saveChanges: () => void;
 }
 
 const EditableContext = createContext<EditableContextType | undefined>(undefined);
@@ -13,6 +15,15 @@ const EditableContext = createContext<EditableContextType | undefined>(undefined
 export const EditableProvider = ({ children }: { children: ReactNode }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState<Record<string, string>>({});
+  const { toast } = useToast();
+
+  // Load saved content from localStorage on initial render
+  useEffect(() => {
+    const savedContent = localStorage.getItem('siteContent');
+    if (savedContent) {
+      setContent(JSON.parse(savedContent));
+    }
+  }, []);
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
 
@@ -24,13 +35,22 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
     return content[id] || '';
   };
 
+  const saveChanges = () => {
+    localStorage.setItem('siteContent', JSON.stringify(content));
+    toast({
+      title: "Changes saved",
+      description: "Your content has been saved successfully.",
+    });
+  };
+
   return (
     <EditableContext.Provider value={{ 
       isEditMode, 
       toggleEditMode, 
       updateContent, 
       content,
-      getContent 
+      getContent,
+      saveChanges
     }}>
       {children}
     </EditableContext.Provider>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronRight, Edit } from "lucide-react";
+import { ChevronRight, Edit, Save } from "lucide-react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Curriculum from "@/components/Curriculum";
@@ -11,7 +11,7 @@ import Contact from "@/components/Contact";
 import { useEditable } from "@/contexts/EditableContext";
 
 const Index = () => {
-  const { isEditMode, toggleEditMode } = useEditable();
+  const { isEditMode, toggleEditMode, saveChanges } = useEditable();
 
   return (
     <div className="min-h-screen bg-background">
@@ -40,6 +40,14 @@ const Index = () => {
             >
               <Edit size={20} />
             </button>
+            {isEditMode && (
+              <button
+                onClick={saveChanges}
+                className="p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white transition-colors"
+              >
+                <Save size={20} />
+              </button>
+            )}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
