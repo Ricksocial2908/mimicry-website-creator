@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -18,8 +18,12 @@
   }
 
   body {
-    @apply bg-background text-foreground font-['Inter'];
+    @apply bg-background text-foreground font-sans;
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
 
@@ -33,26 +37,26 @@
   }
 
   .heading-xl {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight font-heading;
   }
 
   .heading-lg {
-    @apply text-3xl md:text-4xl font-bold tracking-tight;
+    @apply text-3xl md:text-4xl font-bold tracking-tight font-heading;
   }
 
   .heading-md {
-    @apply text-2xl md:text-3xl font-semibold;
+    @apply text-2xl md:text-3xl font-semibold font-heading;
   }
 
   .body-lg {
-    @apply text-lg text-muted-foreground;
+    @apply text-lg text-muted-foreground font-sans;
   }
 
   .body-base {
-    @apply text-base text-muted-foreground;
+    @apply text-base text-muted-foreground font-sans;
   }
 
   .chip {
-    @apply px-4 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary inline-block;
+    @apply px-4 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary inline-block font-sans;
   }
 }

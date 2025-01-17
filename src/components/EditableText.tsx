@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useEditable } from '../contexts/EditableContext';
+import React, { useState, useRef, useEffect } from 'react';
+import { useEditable } from '@/contexts/EditableContext';
 
 interface EditableTextProps {
   id: string;
@@ -8,44 +8,47 @@ interface EditableTextProps {
   as?: keyof JSX.IntrinsicElements;
 }
 
-const EditableText = ({ id, defaultContent, className = '', as: Component = 'div' }: EditableTextProps) => {
-  const { isEditMode, updateContent, content } = useEditable();
-  const [editableContent, setEditableContent] = useState(defaultContent);
+const EditableText: React.FC<EditableTextProps> = ({
+  id,
+  defaultContent,
+  className = '',
+  as: Component = 'div'
+}) => {
+  const { isEditMode, updateContent, getContent } = useEditable();
+  const [isEditing, setIsEditing] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const savedContent = getContent(id) || defaultContent;
 
   useEffect(() => {
-    if (content[id]) {
-      setEditableContent(content[id]);
+    if (contentRef.current) {
+      contentRef.current.innerHTML = savedContent;
     }
-  }, [content, id]);
+  }, [savedContent]);
 
-  const handleBlur = () => {
-    updateContent(id, editableContent);
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (isEditMode) {
+      const newContent = e.currentTarget.innerHTML;
+      updateContent(id, newContent);
+      setIsEditing(false);
+    }
   };
 
-  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
-    setEditableContent(target.textContent || '');
+  const handleClick = () => {
+    if (isEditMode) {
+      setIsEditing(true);
+    }
   };
 
-  if (isEditMode) {
-    return (
-      <div className="relative group">
-        <Component
-          className={`${className} outline-none border border-transparent focus:border-primary rounded px-2`}
-          contentEditable
-          onBlur={handleBlur}
-          onInput={handleInput}
-          suppressContentEditableWarning
-          dangerouslySetInnerHTML={{ __html: editableContent }}
-        />
-        <div className="absolute -top-2 -right-2 bg-primary text-xs px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-          Edit
-        </div>
-      </div>
-    );
-  }
-
-  return <Component className={className}>{editableContent}</Component>;
+  return (
+    <Component
+      ref={contentRef}
+      className={`${className} ${isEditMode ? 'cursor-text hover:bg-white/5' : ''}`}
+      contentEditable={isEditMode}
+      onBlur={handleBlur}
+      onClick={handleClick}
+      suppressContentEditableWarning={true}
+    />
+  );
 };
 
 export default EditableText;
