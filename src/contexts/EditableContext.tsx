@@ -69,15 +69,40 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
 
   const saveChanges = async () => {
     try {
-      const { error } = await supabase
+      // First, check if there's any existing content
+      const { data: existingData } = await supabase
         .from('site_content')
-        .upsert({
-          content,
-          video_id: videoId,
-          updated_at: new Date().toISOString()
-        });
+        .select('id')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-      if (error) throw error;
+      let result;
+      
+      if (existingData) {
+        // Update existing record
+        result = await supabase
+          .from('site_content')
+          .update({
+            content,
+            video_id: videoId,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', existingData.id);
+      } else {
+        // Insert new record
+        result = await supabase
+          .from('site_content')
+          .insert({
+            content,
+            video_id: videoId,
+            updated_at: new Date().toISOString()
+          });
+      }
+
+      if (result.error) {
+        throw result.error;
+      }
 
       toast({
         title: "Changes saved",
