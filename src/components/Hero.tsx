@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import EditableText from "./EditableText";
 
 const Hero = () => {
   return (
@@ -10,19 +11,32 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <div className="chip mb-6">Complete video editing course</div>
-          <h1 className="heading-xl mb-6">
-            Transform your video editing skills with a course crafted by industry experts
-          </h1>
-          <p className="body-lg mb-8 max-w-2xl mx-auto">
-            Perfect for beginners to pros, master the skills to create stunning visuals through any editing platform.
-          </p>
+          <EditableText
+            id="hero-chip"
+            defaultContent="Complete video editing course"
+            className="chip mb-6"
+          />
+          <EditableText
+            id="hero-title"
+            defaultContent="Transform your video editing skills with a course crafted by industry experts"
+            className="heading-xl mb-6"
+            as="h1"
+          />
+          <EditableText
+            id="hero-description"
+            defaultContent="Perfect for beginners to pros, master the skills to create stunning visuals through any editing platform."
+            className="body-lg mb-8 max-w-2xl mx-auto"
+          />
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-8 py-4 bg-primary text-white rounded-lg text-lg font-medium hover:bg-primary/90 transition-colors"
           >
-            START TODAY
+            <EditableText
+              id="hero-button"
+              defaultContent="START TODAY"
+              className="inline-block"
+            />
           </motion.button>
         </motion.div>
       </div>
