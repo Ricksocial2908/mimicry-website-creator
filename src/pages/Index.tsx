@@ -15,10 +15,11 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Session } from "@supabase/supabase-js";
 
 const Index = () => {
   const { isEditMode, toggleEditMode, saveChanges } = useEditable();
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [showAuth, setShowAuth] = useState(false);
   const { toast } = useToast();
 
@@ -32,10 +33,15 @@ const Index = () => {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       setShowAuth(false);
+      
+      // Reset edit mode when logging out
+      if (!session && isEditMode) {
+        toggleEditMode();
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [isEditMode, toggleEditMode]);
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -73,26 +79,29 @@ const Index = () => {
           <div className="flex items-center gap-4">
             {session ? (
               <>
+                <Button
+                  onClick={toggleEditMode}
+                  variant={isEditMode ? "default" : "outline"}
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <Edit size={16} />
+                  {isEditMode ? "Editing" : "Edit"}
+                </Button>
                 {isEditMode && (
-                  <button
-                    onClick={toggleEditMode}
-                    className={`p-2 rounded-lg transition-colors ${
-                      isEditMode ? 'bg-primary text-white' : 'bg-white/10 hover:bg-white/20'
-                    }`}
-                  >
-                    <Edit size={20} />
-                  </button>
-                )}
-                {isEditMode && (
-                  <button
+                  <Button
                     onClick={saveChanges}
-                    className="p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white transition-colors"
+                    variant="default"
+                    size="sm"
+                    className="flex items-center gap-2"
                   >
-                    <Save size={20} />
-                  </button>
+                    <Save size={16} />
+                    Save
+                  </Button>
                 )}
                 <Button
                   variant="ghost"
+                  size="sm"
                   onClick={handleLogout}
                   className="flex items-center gap-2"
                 >
