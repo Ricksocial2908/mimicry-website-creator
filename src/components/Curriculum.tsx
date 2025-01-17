@@ -7,16 +7,16 @@ const chapters = [
     number: "CHAPTER 1",
     videos: "84 VIDEOS",
     duration: "28 HOURS",
-    title: "Introduction to video editing",
-    description: "Build a strong foundation in video editing, covering essential tools, software setup, and workflow basics.",
+    title: "Introduction to AI Video Generation",
+    description: "Build a strong foundation in AI video generation, covering essential tools, software setup, and workflow basics.",
     image: "/lovable-uploads/8d624ca8-e7a5-4395-b42b-73afa2843bd6.png"
   },
   {
     number: "CHAPTER 2",
     videos: "105 VIDEOS",
     duration: "36 HOURS",
-    title: "Editing fundamentals",
-    description: "Learn core techniques like timeline organization, cutting, trimming, and adding smooth transitions.",
+    title: "AI Generation fundamentals",
+    description: "Learn core techniques like prompt engineering, model selection, and enhancing video quality with AI.",
     image: "/lovable-uploads/8d624ca8-e7a5-4395-b42b-73afa2843bd6.png"
   }
 ];

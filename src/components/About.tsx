@@ -37,7 +37,7 @@ const About = () => {
               <span className="text-primary">
                 <EditableText
                   id="about-title-2"
-                  defaultContent="the art of video editing"
+                  defaultContent="the art of AI video generation"
                   className="inline"
                 />
               </span>
@@ -51,7 +51,7 @@ const About = () => {
             <div className="glass-card p-8 rounded-2xl">
               <EditableText
                 id="about-description"
-                defaultContent="At Edclip, we offer comprehensive video editing courses designed for all major software – from Adobe Premiere to Final Cut Pro. Master the skills to create stunning visuals, regardless of the tools you use."
+                defaultContent="At Edclip, we offer comprehensive AI video generation courses designed for cutting-edge tools and platforms. Master the skills to create stunning AI-generated videos using the latest technology."
                 className="text-lg leading-relaxed"
               />
               <button className="mt-6 px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:bg-black/80 transition-colors">
@@ -85,7 +85,7 @@ const About = () => {
             <div className="glass-card p-6 rounded-xl">
               <EditableText
                 id="about-quote"
-                defaultContent="Editing isn't just technical, it's creative. Our courses empower you to tell impactful stories through any editing platform."
+                defaultContent="AI video generation isn't just technical, it's creative. Our courses empower you to tell impactful stories through advanced AI tools."
                 className="text-lg font-medium"
               />
             </div>
@@ -101,7 +101,7 @@ const About = () => {
         >
           <EditableText
             id="about-footer"
-            defaultContent="Comprehensive courses designed for all skill levels, adaptable to your preferred editing software and creative goals."
+            defaultContent="Comprehensive courses designed for all skill levels, adaptable to your preferred AI video generation tools and creative goals."
             className="text-lg text-muted-foreground max-w-3xl mx-auto"
           />
         </motion.div>

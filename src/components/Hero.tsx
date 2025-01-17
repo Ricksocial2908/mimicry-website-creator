@@ -68,7 +68,7 @@ const Hero = () => {
               <h1 className="text-6xl md:text-7xl font-heading font-bold tracking-tight">
                 <EditableText
                   id="hero-title-1"
-                  defaultContent="Complete video editing"
+                  defaultContent="Complete AI video generation"
                   className="block"
                 />
                 <EditableText
@@ -85,7 +85,7 @@ const Hero = () => {
               
               <EditableText
                 id="hero-description"
-                defaultContent="Transform your video editing skills with a course crafted by industry experts, perfect for beginners to pros."
+                defaultContent="Transform your AI video generation skills with a course crafted by industry experts, perfect for beginners to pros."
                 className="text-lg md:text-xl text-white/80 max-w-2xl"
               />
 
