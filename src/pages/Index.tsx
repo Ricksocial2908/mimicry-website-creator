@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronRight, Edit, Save } from "lucide-react";
+import { ChevronRight, Edit, Save, LogOut } from "lucide-react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Curriculum from "@/components/Curriculum";
@@ -10,9 +10,43 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import { useEditable } from "@/contexts/EditableContext";
 import EditableText from "@/components/EditableText";
+import Auth from "@/components/Auth";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const { isEditMode, toggleEditMode, saveChanges } = useEditable();
+  const [session, setSession] = useState(null);
+  const [showAuth, setShowAuth] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setShowAuth(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,43 +71,65 @@ const Index = () => {
             <a href="#faq" className="text-sm hover:text-primary transition-colors">FAQ</a>
           </div>
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggleEditMode}
-              className={`p-2 rounded-lg transition-colors ${
-                isEditMode ? 'bg-primary text-white' : 'bg-white/10 hover:bg-white/20'
-              }`}
-            >
-              <Edit size={20} />
-            </button>
-            {isEditMode && (
-              <button
-                onClick={saveChanges}
-                className="p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white transition-colors"
+            {session ? (
+              <>
+                {isEditMode && (
+                  <button
+                    onClick={toggleEditMode}
+                    className={`p-2 rounded-lg transition-colors ${
+                      isEditMode ? 'bg-primary text-white' : 'bg-white/10 hover:bg-white/20'
+                    }`}
+                  >
+                    <Edit size={20} />
+                  </button>
+                )}
+                {isEditMode && (
+                  <button
+                    onClick={saveChanges}
+                    className="p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white transition-colors"
+                  >
+                    <Save size={20} />
+                  </button>
+                )}
+                <Button
+                  variant="ghost"
+                  onClick={handleLogout}
+                  className="flex items-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button
+                onClick={() => setShowAuth(!showAuth)}
+                className="px-6 py-2 bg-primary text-white rounded-lg flex items-center gap-2 hover:bg-primary/90 transition-colors"
               >
-                <Save size={20} />
-              </button>
+                LOGIN
+                <ChevronRight size={16} />
+              </Button>
             )}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-primary text-white rounded-lg flex items-center gap-2 hover:bg-primary/90 transition-colors"
-            >
-              JOIN NOW
-              <ChevronRight size={16} />
-            </motion.button>
           </div>
         </div>
       </nav>
       
       <main className="pt-20">
-        <Hero />
-        <About />
-        <Curriculum />
-        <Stats />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-        <Contact />
+        {showAuth && !session ? (
+          <div className="container mx-auto px-6 py-12">
+            <Auth />
+          </div>
+        ) : (
+          <>
+            <Hero />
+            <About />
+            <Curriculum />
+            <Stats />
+            <Testimonials />
+            <Pricing />
+            <FAQ />
+            <Contact />
+          </>
+        )}
       </main>
     </div>
   );
