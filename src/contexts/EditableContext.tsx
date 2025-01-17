@@ -24,28 +24,38 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
   // Load content from Supabase on initial render
   useEffect(() => {
     const loadContent = async () => {
-      const { data, error } = await supabase
-        .from('site_content')
-        .select('content, video_id')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('site_content')
+          .select('content, video_id')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
-      if (error) {
-        console.error('Error loading content:', error);
-        return;
-      }
-
-      if (data) {
-        setContent(data.content as Record<string, string>);
-        if (data.video_id) {
-          setVideoId(data.video_id);
+        if (error) {
+          console.error('Error loading content:', error);
+          return;
         }
+
+        // If we have data, use it. Otherwise, keep the default state
+        if (data) {
+          setContent(data.content as Record<string, string>);
+          if (data.video_id) {
+            setVideoId(data.video_id);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading content:', error);
+        toast({
+          title: "Error loading content",
+          description: "There was a problem loading your content. Using default content.",
+          variant: "destructive"
+        });
       }
     };
 
     loadContent();
-  }, []);
+  }, [toast]);
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
 
