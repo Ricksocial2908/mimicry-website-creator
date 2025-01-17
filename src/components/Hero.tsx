@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import EditableText from "./EditableText";
-import { useState } from "react";
-import { Input } from "./ui/input";
 import { Settings } from "lucide-react";
+import { Input } from "./ui/input";
+import { useEditable } from "@/contexts/EditableContext";
 
 const Hero = () => {
-  const [videoId, setVideoId] = useState("jfKfPfyJRdk"); // default video ID
+  const { videoId, setVideoId, isEditMode } = useEditable();
   const [showSettings, setShowSettings] = useState(false);
 
   return (
@@ -25,12 +25,14 @@ const Hero = () => {
       </div>
 
       {/* Settings Button */}
-      <button
-        onClick={() => setShowSettings(!showSettings)}
-        className="absolute top-24 right-4 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
-      >
-        <Settings className="w-5 h-5" />
-      </button>
+      {isEditMode && (
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="absolute top-24 right-4 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+        >
+          <Settings className="w-5 h-5" />
+        </button>
+      )}
 
       {/* Settings Panel */}
       {showSettings && (
