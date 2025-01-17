@@ -1,23 +1,34 @@
 import { motion } from "framer-motion";
 import EditableText from "./EditableText";
+import EditableImage from "./EditableImage";
 
 const About = () => {
   return (
-    <section id="about" className="section-padding bg-secondary">
+    <section id="about" className="section-padding bg-background">
       <div className="container mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <EditableText
+            id="about-chip"
+            defaultContent="ABOUT US"
+            className="text-sm text-muted-foreground uppercase tracking-wider mb-8"
+          />
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
+            className="space-y-8"
           >
-            <EditableText
-              id="about-chip"
-              defaultContent="ABOUT US"
-              className="chip mb-6"
-            />
-            <h2 className="heading-lg mb-6">
+            <h2 className="heading-lg">
               <EditableText
                 id="about-title-1"
                 defaultContent="Discover "
@@ -36,38 +47,64 @@ const About = () => {
                 className="inline"
               />
             </h2>
-            <EditableText
-              id="about-description"
-              defaultContent="At Edclip, we offer comprehensive video editing courses designed for all major software – from Adobe Premiere to Final Cut Pro. Master the skills to create stunning visuals, regardless of the tools you use."
-              className="body-base mb-6"
-            />
-            <div className="glass-card p-6 rounded-lg">
+
+            <div className="glass-card p-8 rounded-2xl">
               <EditableText
-                id="about-quote"
-                defaultContent="Editing isn't just technical, it's creative. Our courses empower you to tell impactful stories through any editing platform."
-                className="text-lg font-medium mb-2"
+                id="about-description"
+                defaultContent="At Edclip, we offer comprehensive video editing courses designed for all major software – from Adobe Premiere to Final Cut Pro. Master the skills to create stunning visuals, regardless of the tools you use."
+                className="text-lg leading-relaxed"
               />
-              <EditableText
-                id="about-quote-author"
-                defaultContent="- Founder"
-                className="text-sm text-muted-foreground"
-              />
+              <button className="mt-6 px-6 py-2 bg-black text-white rounded-full text-sm font-medium">
+                JOIN NOW
+              </button>
             </div>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative"
+            className="space-y-4"
           >
-            <img
-              src="/lovable-uploads/7370e3f9-ec7e-4382-a024-05264abfd60c.png"
-              alt="Video editing workspace"
-              className="rounded-lg w-full object-cover aspect-[4/3]"
-            />
+            <div className="relative">
+              <EditableImage
+                id="about-founder-image"
+                src="/lovable-uploads/47624442-fbb5-4f4e-bd81-7296d0517f9e.png"
+                alt="Founder"
+                className="w-full h-[500px] object-cover rounded-2xl"
+              />
+              <div className="absolute top-4 right-4">
+                <EditableText
+                  id="about-founder-label"
+                  defaultContent="FOUNDER"
+                  className="text-sm text-white/70 uppercase tracking-wider"
+                />
+              </div>
+            </div>
+            <div className="glass-card p-6 rounded-xl">
+              <EditableText
+                id="about-quote"
+                defaultContent="Editing isn't just technical, it's creative. Our courses empower you to tell impactful stories through any editing platform."
+                className="text-lg font-medium"
+              />
+            </div>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <EditableText
+            id="about-footer"
+            defaultContent="Comprehensive courses designed for all skill levels, adaptable to your preferred editing software and creative goals."
+            className="text-lg text-muted-foreground max-w-3xl mx-auto"
+          />
+        </motion.div>
       </div>
     </section>
   );

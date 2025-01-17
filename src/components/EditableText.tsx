@@ -22,8 +22,8 @@ const EditableText = ({ id, defaultContent, className = '', as: Component = 'div
     updateContent(id, editableContent);
   };
 
-  const handleInput = (e: React.FormEvent<HTMLElement>) => {
-    const target = e.target as HTMLElement;
+  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
     setEditableContent(target.textContent || '');
   };
 
