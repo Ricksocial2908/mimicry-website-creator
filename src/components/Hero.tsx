@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 import EditableText from "./EditableText";
 import { useState } from "react";
+import { Input } from "./ui/input";
+import { Settings } from "lucide-react";
 
 const Hero = () => {
   const [videoId, setVideoId] = useState("jfKfPfyJRdk"); // default video ID
+  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
@@ -20,6 +23,34 @@ const Hero = () => {
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
       </div>
+
+      {/* Settings Button */}
+      <button
+        onClick={() => setShowSettings(!showSettings)}
+        className="absolute top-24 right-4 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+      >
+        <Settings className="w-5 h-5" />
+      </button>
+
+      {/* Settings Panel */}
+      {showSettings && (
+        <div className="absolute top-24 right-16 z-50 p-4 bg-card rounded-lg shadow-lg border border-white/10 w-72">
+          <h3 className="text-sm font-medium mb-2">Background Video Settings</h3>
+          <div className="space-y-2">
+            <label className="text-xs text-white/60">YouTube Video ID</label>
+            <Input
+              type="text"
+              value={videoId}
+              onChange={(e) => setVideoId(e.target.value)}
+              placeholder="Enter YouTube Video ID"
+              className="bg-white/10 border-white/20 text-sm"
+            />
+            <p className="text-xs text-white/40">
+              Example: jfKfPfyJRdk (from youtube.com/watch?v=jfKfPfyJRdk)
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative h-screen flex items-center">
@@ -66,17 +97,6 @@ const Hero = () => {
                   className="inline-block"
                 />
               </motion.button>
-
-              {/* YouTube Video ID Input */}
-              <div className="mt-4">
-                <input
-                  type="text"
-                  value={videoId}
-                  onChange={(e) => setVideoId(e.target.value)}
-                  placeholder="Enter YouTube Video ID"
-                  className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50"
-                />
-              </div>
             </div>
           </motion.div>
         </div>
