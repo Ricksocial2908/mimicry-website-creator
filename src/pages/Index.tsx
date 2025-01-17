@@ -1,12 +1,54 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Curriculum from "@/components/Curriculum";
+import Stats from "@/components/Stats";
+import Testimonials from "@/components/Testimonials";
+import Pricing from "@/components/Pricing";
+import FAQ from "@/components/FAQ";
+import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-lg border-b border-white/10">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-2xl font-bold"
+          >
+            Ed.
+          </motion.div>
+          <div className="hidden md:flex space-x-8">
+            <a href="#about" className="text-sm hover:text-primary transition-colors">ABOUT</a>
+            <a href="#curriculum" className="text-sm hover:text-primary transition-colors">CURRICULUM</a>
+            <a href="#pricing" className="text-sm hover:text-primary transition-colors">PRICING</a>
+            <a href="#faq" className="text-sm hover:text-primary transition-colors">FAQ</a>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-2 bg-primary text-white rounded-lg flex items-center gap-2 hover:bg-primary/90 transition-colors"
+          >
+            JOIN NOW
+            <ChevronRight size={16} />
+          </motion.button>
+        </div>
+      </nav>
+      
+      <main className="pt-20">
+        <Hero />
+        <About />
+        <Curriculum />
+        <Stats />
+        <Testimonials />
+        <Pricing />
+        <FAQ />
+        <Contact />
+      </main>
     </div>
   );
 };
