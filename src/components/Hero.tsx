@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import EditableText from "./EditableText";
 import { Settings } from "lucide-react";
 import { Input } from "./ui/input";
 import { useEditable } from "@/contexts/EditableContext";
+import EditableText from "./EditableText";
+import { useState } from "react";
 
 const Hero = () => {
   const { videoId, setVideoId, isEditMode } = useEditable();

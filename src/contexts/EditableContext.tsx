@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/supabase";
 
 interface EditableContextType {
   isEditMode: boolean;
@@ -20,17 +21,30 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
   const [videoId, setVideoId] = useState("jfKfPfyJRdk");
   const { toast } = useToast();
 
-  // Load saved content from localStorage on initial render
+  // Load content from Supabase on initial render
   useEffect(() => {
-    const savedContent = localStorage.getItem('siteContent');
-    const savedVideoId = localStorage.getItem('videoId');
-    
-    if (savedContent) {
-      setContent(JSON.parse(savedContent));
-    }
-    if (savedVideoId) {
-      setVideoId(savedVideoId);
-    }
+    const loadContent = async () => {
+      const { data, error } = await supabase
+        .from('site_content')
+        .select('content, video_id')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error) {
+        console.error('Error loading content:', error);
+        return;
+      }
+
+      if (data) {
+        setContent(data.content as Record<string, string>);
+        if (data.video_id) {
+          setVideoId(data.video_id);
+        }
+      }
+    };
+
+    loadContent();
   }, []);
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
@@ -43,13 +57,30 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
     return content[id] || '';
   };
 
-  const saveChanges = () => {
-    localStorage.setItem('siteContent', JSON.stringify(content));
-    localStorage.setItem('videoId', videoId);
-    toast({
-      title: "Changes saved",
-      description: "Your content has been saved successfully.",
-    });
+  const saveChanges = async () => {
+    try {
+      const { error } = await supabase
+        .from('site_content')
+        .upsert({
+          content,
+          video_id: videoId,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Changes saved",
+        description: "Your content has been saved successfully.",
+      });
+    } catch (error) {
+      console.error('Error saving content:', error);
+      toast({
+        title: "Error saving changes",
+        description: "There was a problem saving your content. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
