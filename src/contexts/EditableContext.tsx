@@ -5,6 +5,7 @@ interface EditableContextType {
   toggleEditMode: () => void;
   updateContent: (id: string, content: string) => void;
   content: Record<string, string>;
+  getContent: (id: string) => string;
 }
 
 const EditableContext = createContext<EditableContextType | undefined>(undefined);
@@ -19,8 +20,18 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
     setContent((prev) => ({ ...prev, [id]: newContent }));
   };
 
+  const getContent = (id: string) => {
+    return content[id] || '';
+  };
+
   return (
-    <EditableContext.Provider value={{ isEditMode, toggleEditMode, updateContent, content }}>
+    <EditableContext.Provider value={{ 
+      isEditMode, 
+      toggleEditMode, 
+      updateContent, 
+      content,
+      getContent 
+    }}>
       {children}
     </EditableContext.Provider>
   );

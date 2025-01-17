@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useEditable } from '@/contexts/EditableContext';
 
 interface EditableTextProps {
@@ -8,14 +8,13 @@ interface EditableTextProps {
   as?: keyof JSX.IntrinsicElements;
 }
 
-const EditableText: React.FC<EditableTextProps> = ({
+const EditableText = ({
   id,
   defaultContent,
   className = '',
   as: Component = 'div'
-}) => {
+}: EditableTextProps) => {
   const { isEditMode, updateContent, getContent } = useEditable();
-  const [isEditing, setIsEditing] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const savedContent = getContent(id) || defaultContent;
 
@@ -25,29 +24,23 @@ const EditableText: React.FC<EditableTextProps> = ({
     }
   }, [savedContent]);
 
-  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    if (isEditMode) {
-      const newContent = e.currentTarget.innerHTML;
+  const handleBlur = () => {
+    if (isEditMode && contentRef.current) {
+      const newContent = contentRef.current.innerHTML;
       updateContent(id, newContent);
-      setIsEditing(false);
     }
   };
 
-  const handleClick = () => {
-    if (isEditMode) {
-      setIsEditing(true);
+  return React.createElement(
+    Component,
+    {
+      ref: contentRef,
+      className: `${className} ${isEditMode ? 'cursor-text hover:bg-white/5' : ''}`,
+      contentEditable: isEditMode,
+      onBlur: handleBlur,
+      suppressContentEditableWarning: true,
+      dangerouslySetInnerHTML: { __html: savedContent }
     }
-  };
-
-  return (
-    <Component
-      ref={contentRef}
-      className={`${className} ${isEditMode ? 'cursor-text hover:bg-white/5' : ''}`}
-      contentEditable={isEditMode}
-      onBlur={handleBlur}
-      onClick={handleClick}
-      suppressContentEditableWarning={true}
-    />
   );
 };
 
