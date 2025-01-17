@@ -5,7 +5,7 @@ import EditableImage from "./EditableImage";
 const About = () => {
   return (
     <section id="about" className="section-padding bg-background">
-      <div className="container mx-auto">
+      <div className="container mx-auto max-w-[1200px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ const About = () => {
                 defaultContent="At Edclip, we offer comprehensive video editing courses designed for all major software – from Adobe Premiere to Final Cut Pro. Master the skills to create stunning visuals, regardless of the tools you use."
                 className="text-lg leading-relaxed"
               />
-              <button className="mt-6 px-6 py-2 bg-black text-white rounded-full text-sm font-medium">
+              <button className="mt-6 px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:bg-black/80 transition-colors">
                 JOIN NOW
               </button>
             </div>
