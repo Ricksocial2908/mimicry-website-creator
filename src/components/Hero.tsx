@@ -1,18 +1,24 @@
 import { motion } from "framer-motion";
 import EditableText from "./EditableText";
+import { useState } from "react";
 
 const Hero = () => {
+  const [videoId, setVideoId] = useState("jfKfPfyJRdk"); // default video ID
+
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(/lovable-uploads/fd0bc9a6-38f9-4273-b9d9-a0bf8cce72c5.png)',
-        }}
-      >
+      {/* YouTube Video Background */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
+        <div className="relative w-full h-full">
+          <iframe
+            className="absolute w-[300%] h-[300%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&mute=1&loop=1&playlist=${videoId}&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&enablejsapi=1`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            frameBorder="0"
+          />
+        </div>
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
       </div>
 
       {/* Content */}
@@ -60,6 +66,17 @@ const Hero = () => {
                   className="inline-block"
                 />
               </motion.button>
+
+              {/* YouTube Video ID Input */}
+              <div className="mt-4">
+                <input
+                  type="text"
+                  value={videoId}
+                  onChange={(e) => setVideoId(e.target.value)}
+                  placeholder="Enter YouTube Video ID"
+                  className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50"
+                />
+              </div>
             </div>
           </motion.div>
         </div>
