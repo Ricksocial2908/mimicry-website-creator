@@ -34,7 +34,8 @@ const VagonStream = () => {
               className="absolute inset-0 w-full h-full"
               allow="microphone *; clipboard-read *; clipboard-write *; encrypted-media *; fullscreen *;"
               src="https://streams.vagon.io/streams/d79f9a66-a548-4e21-9fd6-5e13a3bd5b1b"
-              sandbox="allow-pointer-lock allow-scripts allow-same-origin"
+              sandbox="allow-pointer-lock allow-scripts allow-same-origin allow-forms allow-popups"
+              style={{ border: 'none' }}
             />
           </div>
         </motion.div>
