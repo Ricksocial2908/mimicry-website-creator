@@ -30,10 +30,11 @@ const VagonStream = () => {
           
           <div className="relative w-full aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden glass-card">
             <iframe
-              src="https://streams.vagon.io/streams/d79f9a66-a548-4e21-9fd6-5e13a3bd5b1b"
+              id="vagonFrame"
               className="absolute inset-0 w-full h-full"
-              allow="microphone; camera; fullscreen; display-capture; clipboard-read; clipboard-write"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock"
+              allow="microphone *; clipboard-read *; clipboard-write *; encrypted-media *; fullscreen *;"
+              src="https://streams.vagon.io/streams/29e9d1c2-378b-4b37-8223-c9516a25212e"
+              sandbox="allow-pointer-lock"
               style={{ border: 'none', background: 'transparent' }}
             />
           </div>
