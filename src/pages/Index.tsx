@@ -8,7 +8,6 @@ import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
-import VagonStream from "@/components/VagonStream";
 import { useEditable } from "@/contexts/EditableContext";
 import EditableText from "@/components/EditableText";
 import Auth from "@/components/Auth";
@@ -132,7 +131,6 @@ const Index = () => {
           <>
             <Hero />
             <About />
-            <VagonStream />
             <Curriculum />
             <Stats />
             <Testimonials />
