@@ -36,7 +36,6 @@ const VagonStream = () => {
           </div>
           
           <div className="relative">
-            {/* Settings Button */}
             {isEditMode && (
               <button
                 onClick={() => setShowSettings(!showSettings)}
@@ -46,7 +45,6 @@ const VagonStream = () => {
               </button>
             )}
 
-            {/* Settings Panel */}
             {showSettings && (
               <div className="absolute -top-12 right-12 z-50 p-4 bg-card rounded-lg shadow-lg border border-white/10 w-96">
                 <h3 className="text-sm font-medium mb-2">Vagon Stream Settings</h3>
@@ -66,14 +64,14 @@ const VagonStream = () => {
               </div>
             )}
 
-            <div className="relative w-full aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden glass-card">
+            <div className="relative w-full aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden bg-black/20">
               <iframe
                 id="vagonFrame"
                 className="absolute inset-0 w-full h-full"
                 allow="microphone *; clipboard-read *; clipboard-write *; encrypted-media *; fullscreen *;"
                 src={vagonUrl}
-                sandbox="allow-pointer-lock"
-                style={{ border: 'none', background: 'transparent' }}
+                sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock"
+                style={{ border: 'none' }}
               />
             </div>
           </div>
