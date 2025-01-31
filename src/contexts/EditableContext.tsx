@@ -11,6 +11,8 @@ interface EditableContextType {
   saveChanges: () => void;
   videoId: string;
   setVideoId: (id: string) => void;
+  vagonUrl: string;
+  setVagonUrl: (url: string) => void;
 }
 
 const EditableContext = createContext<EditableContextType | undefined>(undefined);
@@ -19,6 +21,7 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState<Record<string, string>>({});
   const [videoId, setVideoId] = useState("jfKfPfyJRdk");
+  const [vagonUrl, setVagonUrl] = useState("https://streams.vagon.io/streams/29e9d1c2-378b-4b37-8223-c9516a25212e");
   const { toast } = useToast();
 
   // Load content from Supabase on initial render
@@ -27,7 +30,7 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
       try {
         const { data, error } = await supabase
           .from('site_content')
-          .select('content, video_id')
+          .select('content, video_id, vagon_url')
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle();
@@ -42,6 +45,9 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
           setContent(data.content as Record<string, string>);
           if (data.video_id) {
             setVideoId(data.video_id);
+          }
+          if (data.vagon_url) {
+            setVagonUrl(data.vagon_url);
           }
         }
       } catch (error) {
@@ -100,6 +106,7 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
           .update({
             content,
             video_id: videoId,
+            vagon_url: vagonUrl,
             updated_at: new Date().toISOString(),
             user_id: session.user.id
           })
@@ -111,6 +118,7 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
           .insert({
             content,
             video_id: videoId,
+            vagon_url: vagonUrl,
             user_id: session.user.id,
             updated_at: new Date().toISOString()
           });
@@ -144,7 +152,9 @@ export const EditableProvider = ({ children }: { children: ReactNode }) => {
       getContent,
       saveChanges,
       videoId,
-      setVideoId
+      setVideoId,
+      vagonUrl,
+      setVagonUrl
     }}>
       {children}
     </EditableContext.Provider>
